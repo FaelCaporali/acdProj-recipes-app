@@ -41,7 +41,9 @@ const SugestionCarousel = ({ sugestions = [] }) => {
 };
 
 SugestionCarousel.propTypes = {
-  sugestions: propTypes.arrayOf(propTypes.object).isRequired,
+  sugestions: propTypes.arrayOf(propTypes.shape({
+    strTags: propTypes.string,
+  })).isRequired,
 };
 
 export default SugestionCarousel;
