@@ -1,10 +1,13 @@
 import { cleanup, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './helpers/renderWithRouter';
+import alternativeRenderWithRouter from './helpers/alternativeRenderWithRouter';
 import RecipeInProgress from '../pages/RecipeInProgress';
+import App from '../App'
 import foods from './mocks/FOODS_NO_NAME_RESPONSE.json';
 import drinks from './mocks/DRINKS_NO_NAME_RESPONSE.json';
 import { drinkDetailed, foodDetailed } from './mocks/RECIPE_DETAILS_RESPONSE';
+import DONE_RECIPES_STORAGE from './mocks/localStorage/DONE_RECIPES_STORAGE';
 import {
   PHOTO_TESTID,
   TITLE_TESTID,
@@ -15,7 +18,10 @@ import {
   SHARE_BTN_TESTID,
   FINISH_BTN_TESTID,
 } from './mocks/constants/detailsAndInProgressTestIds.json';
+import doneTestIds from './mocks/constants/doneRecipesTestsIds';
 import parseToFav from '../assets/functions/parseToFav';
+
+const { FILTER_ALL_BTN_TESTID } = doneTestIds;
 
 const drinkObj = drinkDetailed.drinks[0];
 const DRINK_IMG_SRC = drinkObj.strDrinkThumb;
@@ -184,11 +190,15 @@ describe('Testes de receitas em progresso', () => {
       expect(ingredients[0].checked).toBe(true);
       expect(ingredients[1].checked).toBe(true);
 
+      userEvent.click(ingredients[0]);
+      
+      expect(ingredients[0].checked).toBe(false);
+
       page.unmount();
 
       const finalStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
-      expect(finalStorage.meals[52772].some((ing) => ing.includes(CASSEROLE_INGREDIENT_1_NAME))).toBe(true);
+      expect(finalStorage.meals[52772].some((ing) => ing.includes(CASSEROLE_INGREDIENT_1_NAME))).toBe(false);
       expect(finalStorage.meals[52772].some((ing) => ing.includes(CASSEROLE_INGREDIENT_2_NAME))).toBe(true);   
     });
     test('2.3. Testa se fornecido um storage com o ingrediente salvo, a checkBox é renderiza selecionada', async () => {
@@ -228,7 +238,7 @@ describe('Testes de receitas em progresso', () => {
 
       expect(doneKey.some((recipe) => recipe.id === '52772')).toBe(true);
     });
-    test('3.3. Testa se ao final da receita, o usuário é redirecionado para o caminho "/done-recipes"', async () => {
+    test('3.3. Testa se ao final da receita, o usuário é redirecionado para a rota "/done-recipes"', async () => {
       const { history } = await fakeSetUp(RecipeInProgress, '/foods/52772/in-progress', '/foods/:id/in-progress');
 
       const btn = screen.getByTestId(FINISH_BTN_TESTID);
@@ -237,5 +247,14 @@ describe('Testes de receitas em progresso', () => {
 
       expect(history.location.pathname).toBe('/done-recipes');
     });
-  })
+    test('3.4. Testa se a receita já foi concluída, a página é redirecionada para a rota "/done-recipes"', async () => {
+      localStorage.setItem('doneRecipes', JSON.stringify(DONE_RECIPES_STORAGE))
+      const { history } = alternativeRenderWithRouter(<App />);
+      history.push('/foods/53061/in-progress');
+
+      await waitFor(() => screen.getByTestId(FILTER_ALL_BTN_TESTID));
+
+      expect(history.location.pathname).toBe('/done-recipes');
+    });
+  });
 });

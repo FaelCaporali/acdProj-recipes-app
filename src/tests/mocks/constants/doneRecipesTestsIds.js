@@ -7,7 +7,7 @@ const doneTestIds = {
   NAME_TESTID: (index) => `${index}-horizontal-name`,
   DATE_TESTID: (index) => `${index}-horizontal-done-date`,
   SHARE_BTN: (index) => `${index}-horizontal-share-btn`,
-  TAGS_TESTID: (index) => `${index}-horizontal-tag,`,
+  SARDINE_TAG_TESTID: '0-Fresh-horizontal-tag',
 };
 
 export default doneTestIds;

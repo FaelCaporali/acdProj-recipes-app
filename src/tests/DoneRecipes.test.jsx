@@ -14,7 +14,7 @@ const {
   NAME_TESTID,
   DATE_TESTID,
   SHARE_BTN,
-  TAGS_TESTID,
+  SARDINE_TAG_TESTID,
 } = doneRecipesTestsIds;
 
 const fakeSetUp = async () => {
@@ -23,7 +23,7 @@ const fakeSetUp = async () => {
     route: '/done-recipes',
   });
 
-  await waitFor(() => screen.getByTestId(IMAGE_CARD_TESTID(1)));
+  await waitFor(() => screen.getAllByRole('img'));
   return container;
 }
 
@@ -31,7 +31,7 @@ describe('Testes da página de receitas feitas', () => {
   afterEach(() => cleanup());
   localStorage.setItem(
     'doneRecipes',
-    JSON.stringify(JSON.stringify(DONE_RECIPES_STORAGE))
+    JSON.stringify(DONE_RECIPES_STORAGE)
   );
   test('1. Com duas receitas completas, busca elementos pelos test-ids e confirma que estão disponíveis', async () => {
     await fakeSetUp();
@@ -48,7 +48,7 @@ describe('Testes da página de receitas feitas', () => {
     const dateCardTwo = screen.getByTestId(DATE_TESTID(1));
     const shareBtnOne = screen.getByTestId(SHARE_BTN(0));
     const shareBtnTwo = screen.getByTestId(SHARE_BTN(1));
-    const tagCard = screen.getByTestId(TAGS_TESTID(0));
+    const tagCard = screen.getByTestId(SARDINE_TAG_TESTID);
 
     expect(filterBtn).toBeInTheDocument();
     expect(foodBtn).toBeInTheDocument();
@@ -66,36 +66,33 @@ describe('Testes da página de receitas feitas', () => {
     expect(tagCard).toBeInTheDocument();
   });
   test('2. clicado no botão de compartilhar, o alerta se torna visível, e o clipboard copia o endereço correto', async () => {
-    global.navigator.clipboard = { writeText: jest.fn() };
+    const newClip = jest.fn()
+    global.navigator.clipboard = { writeText: newClip };
     jest.spyOn(navigator.clipboard, 'writeText');
     await fakeSetUp();
+
+    const URLLocation = `${window.location.origin}/done-recipes`;
 
     const shareBtnOne = screen.getByTestId(SHARE_BTN(0));
     const shareBtnTwo = screen.getByTestId(SHARE_BTN(1));
 
     userEvent.click(shareBtnOne);
 
-    const alert = await screen.findByRole('alert');
+    const alert1 = screen.getByRole('alert');
 
-    expect(alert).toBeInTheDocument();
-    expect(writeText).toHaveBeenCalledWith(
-      `${window.location.origin}/done-recipes`
-    );
+    expect(newClip).toHaveBeenCalledWith(URLLocation);
+    expect(alert1).toBeInTheDocument();
 
-    await waitFor((r) => new Promise(() => r, 1000));
+    await new Promise((r) => setTimeout(r, 3500));
 
-    expect(alert).not.toBeInTheDocument();
+    expect(alert1).not.toBeInTheDocument();
 
     userEvent.click(shareBtnTwo);
 
-    expect(alert).toBeInTheDocument();
-    expect(writeText).toHaveBeenCalledWith(
-      `${window.location.origin}/done-recipes`
-    );
+    const alert2 = screen.getByRole('alert')
 
-    await waitFor((r) => new Promise(() => r, 1000));
-
-    expect(alert).not.toBeInTheDocument();
+    expect(newClip).toHaveBeenCalledWith(URLLocation);
+    expect(alert2).toBeInTheDocument();
   });
   test('3. Testa a funcionalidade dos botões de filtro', async () => {
     await fakeSetUp();
