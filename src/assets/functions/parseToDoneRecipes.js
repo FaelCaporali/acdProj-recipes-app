@@ -4,6 +4,7 @@ export default function parseToDoneRecipes(recipe, recipeType) {
   const date = `${dataAutal.getDate()}/${dataAutal.getMonth()
      + 1}/${dataAutal.getFullYear()}`;
   const listaTags = recipe.strTags === null ? [] : recipe.strTags.split(',');
+
   return {
     id: recipe[`id${recipeType}`],
     type: localStorageType,
