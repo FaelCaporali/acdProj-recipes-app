@@ -25,7 +25,6 @@ const FavoriteRecipes = () => {
     setFavorites(changeLocalStorage('favoriteRecipes'));
   };
 
-  console.log(favorites);
   return (
     <div>
       <button

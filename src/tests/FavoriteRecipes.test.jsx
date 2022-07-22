@@ -15,7 +15,6 @@ const {
   NAME_TESTID,
   DATE_TESTID,
   SHARE_BTN,
-  SARDINE_TAG_TESTID,
 } = doneRecipesTestsIds;
 
 const fakeSetUp = async () => {
@@ -46,6 +45,8 @@ describe("Testes das receitas favoritadas", () => {
     const dateCardTwo = screen.getByTestId(DATE_TESTID(1));
     const shareBtnOne = screen.getByTestId(SHARE_BTN(0));
     const shareBtnTwo = screen.getByTestId(SHARE_BTN(1));
+    const dislike = screen.getByTestId('0-horizontal-favorite-btn');
+    const dislikeTwo = screen.getByTestId('1-horizontal-favorite-btn');
 
 
     expect(filterBtn).toBeInTheDocument();
@@ -61,8 +62,8 @@ describe("Testes das receitas favoritadas", () => {
     expect(dateCardTwo).toBeInTheDocument();
     expect(shareBtnOne).toBeInTheDocument();
     expect(shareBtnTwo).toBeInTheDocument();
-    
-
+    expect(dislike).toBeInTheDocument();
+    expect(dislikeTwo).toBeInTheDocument();
   });
   test("2. clicado no botão de compartilhar, o alerta se torna visível, e o clipboard copia o endereço correto", async () => {
     const myFunc = jest.fn();
@@ -136,4 +137,16 @@ describe("Testes das receitas favoritadas", () => {
 
     expect(history.location.pathname).toBe("/foods/53061");
   });
+  test('5. Testa se o botão de desfavoritar atualiza o localStorage, e a lista de favoritos é atualizada', async () => {
+    await fakeSetUp();
+
+    const dislike = screen.getByTestId('0-horizontal-favorite-btn');
+
+    userEvent.click(dislike);
+ 
+    const updatedStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+    expect(updatedStorage.some((rec) => rec.id === '53061')).toBe(false);
+    expect(dislike).not.toBeInTheDocument();
+  })
 });
