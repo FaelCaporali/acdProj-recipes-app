@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import { fetchData } from '../assets/api';
 import { mapIngredients } from '../assets/functions';
-import parseToDoneRecipes from '../assets/functions/parseTODoneRecipes';
+import parseToDoneRecipes from '../assets/functions/parseToDoneRecipes';
 import { useAsyncEffect, changeLocalStorage } from '../assets/hooks';
 import useRecipeType from '../assets/hooks/useRecipeType';
 import ShareAndLike from '../components/ShareAndLike';
@@ -51,7 +51,9 @@ const RecipeDetails = () => {
 
   useAsyncEffect(async () => {
     // busca receita pelo id
-    if (checkDone) history.push('/done-recipes');
+    if (checkDone) {
+      return history.push('/done-recipes');
+    }
     const actual = await fetchData.detail({ recipeType, id });
 
     setRecipe(actual[0]);
