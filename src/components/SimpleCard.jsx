@@ -22,7 +22,7 @@ SimpleCard.defaultProps = {
 };
 
 SimpleCard.propTypes = {
-  index: PropTypes.number,
+  index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   id: PropTypes.string.isRequired,
   recipeType: PropTypes.string.isRequired,
   thumb: PropTypes.string.isRequired,

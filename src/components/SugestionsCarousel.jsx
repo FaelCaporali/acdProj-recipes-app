@@ -8,6 +8,7 @@ const mapToCarousel = (sugestions, recipeType) => sugestions.map((recipe, i) => 
   thumb: recipe[`str${recipeType}Thumb`],
   name: recipe[`str${recipeType}`],
   id: recipe[`id${recipeType}`],
+  recipeType,
 }));
 
 const SugestionCarousel = ({ sugestions = [] }) => {
