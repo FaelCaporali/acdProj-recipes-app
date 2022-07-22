@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { Link } from 'react-router-dom';
 import shareIco from '../images/shareIcon.svg';
 
 const CardDoneRecipe = ({ recipe, index }) => {
   const {
     image,
     name,
-    category, doneDate, tags, nationality, type, alcoholicOrNot, id } = recipe;
-
+    category,
+    doneDate,
+    tags,
+    nationality,
+    type,
+    alcoholicOrNot,
+    id } = recipe;
+  const routeType = type === 'food' ? 'foods' : 'drinks';
   const {
     location: { origin },
   } = window;
@@ -16,9 +22,8 @@ const CardDoneRecipe = ({ recipe, index }) => {
   const [copiedAlert, fireAlert] = useState(false);
 
   const shareRecipe = () => {
-    const timeAlertIsVisible = 3000;
-    const routeType = type === 'food' ? 'foods' : 'drinks';
     const textToClip = `${origin}/${routeType}/${id}`;
+    const timeAlertIsVisible = 3000;
     navigator.clipboard.writeText(textToClip);
     fireAlert(true);
     setTimeout(() => fireAlert(false), timeAlertIsVisible);
@@ -26,18 +31,20 @@ const CardDoneRecipe = ({ recipe, index }) => {
 
   return (
     <div>
-      <img
-        src={ image }
-        alt={ name }
-        width="100px"
-        data-testid={ `${index}-horizontal-image` }
-      />
+      <Link to={ `/${routeType}/${id}` }>
+        <img
+          src={ image }
+          alt={ name }
+          width="100px"
+          data-testid={ `${index}-horizontal-image` }
+        />
+        <span data-testid={ `${index}-horizontal-name` }>{name}</span>
+      </Link>
       <span
         data-testid={ `${index}-horizontal-top-text` }
       >
         {type === 'food' ? `${nationality} - ${category}` : alcoholicOrNot }
       </span>
-      <span data-testid={ `${index}-horizontal-name` }>{name}</span>
       <div>
         {copiedAlert && (
           <div className="alert alert-success position-absolute" role="alert">

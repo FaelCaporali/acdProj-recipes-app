@@ -69,9 +69,10 @@ describe('Testes da página de receitas feitas', () => {
     const newClip = jest.fn()
     global.navigator.clipboard = { writeText: newClip };
     jest.spyOn(navigator.clipboard, 'writeText');
+    
     await fakeSetUp();
 
-    const URLLocation = `${window.location.origin}/done-recipes`;
+    const URLLocation = `${window.location.origin}/foods/53061`;
 
     const shareBtnOne = screen.getByTestId(SHARE_BTN(0));
     const shareBtnTwo = screen.getByTestId(SHARE_BTN(1));
@@ -100,26 +101,31 @@ describe('Testes da página de receitas feitas', () => {
     const foodBtn = screen.getByTestId(FILTER_FOOD_BTN_TESTID);
     const drinkBtn = screen.getByTestId(DRINK_FILTER_BTN_TESTID);
 
-    const imgCardOne = screen.getByTestId(IMAGE_CARD_TESTID(0));
-    const imgCardTwo = screen.getByTestId(IMAGE_CARD_TESTID(1));
+    const SARDINE = screen.queryByText(/sardine/i);
+    const NEGRONI = screen.queryByText(/negroni/i);
 
-    expect(imgCardOne).toBeInTheDocument();
-    expect(imgCardTwo).toBeInTheDocument();
+    expect(SARDINE).toBeInTheDocument();
+    expect(NEGRONI).toBeInTheDocument();
 
     userEvent.click(foodBtn);
 
-    expect(imgCardOne).toBeInTheDocument();
-    expect(imgCardTwo).not.toBeInTheDocument();
+    expect(SARDINE).toBeInTheDocument();
+    expect(NEGRONI).not.toBeInTheDocument();
 
     userEvent.click(filterBtn);
+    const SARDINE2 = screen.queryByText(/sardine/i);
+    const NEGRONI2 = screen.queryByText(/negroni/i);
 
-    expect(imgCardOne).toBeInTheDocument();
-    expect(imgCardTwo).toBeInTheDocument();
+    expect(SARDINE2).toBeInTheDocument();
+    expect(NEGRONI2).toBeInTheDocument();
 
     userEvent.click(drinkBtn);
 
-    expect(imgCardOne).not.toBeInTheDocument();
-    expect(imgCardTwo).toBeInTheDocument();
+    const SARDINE3 = screen.queryByText(/sardine/i);
+    const NEGRONI3 = screen.queryByText(/negroni/i);
+
+    expect(SARDINE3).not.toBeInTheDocument();
+    expect(NEGRONI3).toBeInTheDocument();
   });
   test('4. Se clicado no card, o usuário é redirecionado para página de detalhes da receita', async () => {
     const { history } = await fakeSetUp();

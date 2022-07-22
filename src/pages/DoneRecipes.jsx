@@ -15,15 +15,34 @@ const DoneRecipes = () => {
     setRecipes(changeLocalStorage('doneRecipes'));
   }, []);
 
+  const filtro = (filter) => {
+    const arrayRecipes = changeLocalStorage('doneRecipes');
+    if (!filter) return setRecipes(arrayRecipes);
+    const newFilter = arrayRecipes.filter((recipe) => recipe.type === filter);
+    setRecipes(newFilter);
+  };
+
   return (
     <div>
-      <button type="button" data-testid="filter-by-all-btn" onClick={ null }>
+      <button
+        type="button"
+        data-testid="filter-by-all-btn"
+        onClick={ () => filtro() }
+      >
         All
       </button>
-      <button type="button" data-testid="filter-by-food-btn" onClick={ null }>
+      <button
+        type="button"
+        data-testid="filter-by-food-btn"
+        onClick={ () => filtro('food') }
+      >
         Food
       </button>
-      <button type="button" data-testid="filter-by-drink-btn" onClick={ null }>
+      <button
+        type="button"
+        data-testid="filter-by-drink-btn"
+        onClick={ () => filtro('drink') }
+      >
         Drinks
       </button>
       {recipes && recipes.map((recipe, index) => (
