@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import shareIco from '../images/shareIcon.svg';
@@ -26,6 +26,8 @@ export default function ShareAndLike({ recipe }) {
   const checkFavs = () => favsKey !== null && favsKey.some((favRec) => favRec.id === id);
 
   const heartIco = checkFavs() ? favIco : toFavIco;
+
+  useEffect(() => () => clearTimeout(), []);
 
   const shareRecipe = () => {
     const timeAlertIsVisible = 3000;

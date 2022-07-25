@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouteMatch, useHistory } from 'react-router-dom';
-import { fetchData } from '../assets/api';
+import { abortRequest, fetchData } from '../assets/api';
 import { mapIngredients } from '../assets/functions';
 import parseToDoneRecipes from '../assets/functions/parseToDoneRecipes';
 import { useAsyncEffect, changeLocalStorage } from '../assets/hooks';
@@ -59,6 +59,8 @@ const RecipeDetails = () => {
     setRecipe(actual[0]);
     setUsedIng(checkProg);
     setIngredients(mapIngredients(actual[0]).filter((ing) => ing.name !== ''));
+
+    return () => abortRequest();
   }, []);
 
   useEffect(() => {

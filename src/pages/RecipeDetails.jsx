@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouteMatch, useHistory } from 'react-router-dom';
-import { fetchData } from '../assets/api';
+import { abortRequest, fetchData } from '../assets/api';
 import { useAsyncEffect, changeLocalStorage } from '../assets/hooks';
 import useRecipeType from '../assets/hooks/useRecipeType';
 import { getYoutubeEmbedURL, mapIngredients } from '../assets/functions/index';
@@ -49,6 +49,7 @@ const RecipeDetails = () => {
       .then((info) => setSugestions(
         info.map((item, i) => parseToCarousel(item, sugestionsType, i)),
       ));
+    return () => abortRequest();
   }, []);
 
   return (
