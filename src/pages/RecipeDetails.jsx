@@ -4,55 +4,52 @@ import { fetchData } from '../assets/api';
 import { useAsyncEffect, changeLocalStorage } from '../assets/hooks';
 import useRecipeType from '../assets/hooks/useRecipeType';
 import { getYoutubeEmbedURL, mapIngredients } from '../assets/functions/index';
+import { parseToCarousel } from '../assets/functions/parseToCarousel';
 import SugestionsCarousel from '../components/SugestionsCarousel';
 import ShareAndLike from '../components/ShareAndLike';
 
 const RecipeDetails = () => {
-  // busca caminho da URL
   const {
     params: { id },
   } = useRouteMatch();
   const { push } = useHistory();
-  // seta os estados do componente
+
   const [recipe, setRecipe] = useState({});
   const [ingredients, setIngredients] = useState([]);
   const [sugestions, setSugestions] = useState([]);
-  // busca os tipos
+
   const recipeType = useRecipeType();
   const sugestionsType = recipeType === 'Meal' ? 'Drink' : 'Meal';
   const storageRecipeTypes = recipeType === 'Meal' ? 'meals' : 'cocktails';
   const pathTypes = recipeType === 'Meal' ? 'foods' : 'drinks';
-  // declara constantes usadas somente aqui
-  const desiredSugestionsAmount = 6;
-  // uso do localStorage
+
+  const youtubeSrc = recipe.strMeal
+    ? getYoutubeEmbedURL(recipe.strYoutube)
+    : undefined;
+
   const donesKey = changeLocalStorage('doneRecipes');
   const progKey = changeLocalStorage('inProgressRecipes');
-  // checa se receita já foi feita ou se já foi iniciada
   const checkDone = donesKey && donesKey.some((done) => done.id === id);
   const checkProgress = progKey
     && progKey[storageRecipeTypes]
     && Object.keys(progKey[storageRecipeTypes]).some((key) => key === id);
 
-  // 'willMount'
   useAsyncEffect(async () => {
-    // busca receita pelo id
-    const actual = await fetchData.detail({ recipeType, id });
-    setRecipe(actual[0]);
-    setIngredients(mapIngredients(actual[0]).filter((ing) => ing.name !== ''));
-
-    // busca sugestões de receitas
-    const sugestionFetch = await fetchData.get({
-      searchOption: 'byName',
-      recipeType: sugestionsType,
-      queryText: '',
+    await fetchData.detail({ recipeType, id }).then((info) => {
+      setRecipe(info[0]);
+      setIngredients(mapIngredients(info[0]).filter((ing) => ing.name !== ''));
     });
-    setSugestions(sugestionFetch.filter((_, i) => i < desiredSugestionsAmount));
-  }, []);
 
-  // mapeia url de embed video
-  const youtubeSrc = recipe.strMeal
-    ? getYoutubeEmbedURL(recipe.strYoutube)
-    : undefined;
+    await fetchData
+      .get({
+        searchOption: 'byName',
+        recipeType: sugestionsType,
+        queryText: '',
+      })
+      .then((info) => setSugestions(
+        info.map((item, i) => parseToCarousel(item, sugestionsType, i)),
+      ));
+  }, []);
 
   return (
     <div className="recipe-wrapper" data-testid="recipe-wrapper">
@@ -79,6 +76,8 @@ const RecipeDetails = () => {
             ))}
         </ol>
         <p data-testid="instructions">{recipe.strInstructions}</p>
+      </section>
+      <aside>
         {recipe.strYoutube && (
           <iframe
             title="Recipe on Youtube"
@@ -89,9 +88,7 @@ const RecipeDetails = () => {
             data-testid="video"
           />
         )}
-      </section>
-      <aside className="carousel">
-        <SugestionsCarousel sugestions={ sugestions } />
+        {sugestions.length && <SugestionsCarousel sugestions={ sugestions } />}
       </aside>
       {!checkDone && (
         <button

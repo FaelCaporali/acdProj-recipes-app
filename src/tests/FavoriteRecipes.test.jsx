@@ -137,7 +137,7 @@ describe("Testes das receitas favoritadas", () => {
 
     expect(history.location.pathname).toBe("/foods/53061");
   });
-  test('5. Testa se o botão de desfavoritar atualiza o localStorage, e a lista de favoritos é atualizada', async () => {
+  test('5. Testa se o botão de desfavoritar atualiza o localStorage, e a renderização é atualizada', async () => {
     await fakeSetUp();
 
     const dislike = screen.getByTestId('0-horizontal-favorite-btn');
