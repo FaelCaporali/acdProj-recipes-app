@@ -107,6 +107,7 @@ const Recipes = () => {
                 recipeType={ recipeType }
                 name={ parsedRecipe.name }
                 thumb={ parsedRecipe.thumb }
+                className="bigger-recipe-card"
               />
             );
           })
