@@ -5,7 +5,7 @@ import useRecipeType from '../assets/hooks/useRecipeType';
 import SimpleCard from '../components/SimpleCard';
 
 import parseRecipe from '../assets/functions/parseRecipe';
-import { fetchData } from '../assets/api';
+import { abortRequest, fetchData } from '../assets/api';
 import { useAsyncEffect } from '../assets/hooks';
 
 const RECIPES_LIMIT = 12;
@@ -27,6 +27,7 @@ const Recipes = () => {
     setTimeout(() => {
       history.push(`/${typeUrl}/${recipe.id}`);
     }, time);
+    return () => clearTimeout();
   }, [recipes]);
 
   useEffect(() => {
@@ -48,6 +49,7 @@ const Recipes = () => {
 
   useAsyncEffect(async () => {
     setCategoryList(await fetchData.categoryList({ recipeType }));
+    return () => abortRequest();
   }, [recipeType]);
 
   const cutRecipes = useMemo(

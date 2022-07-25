@@ -18,6 +18,9 @@ const getUrl = (recipeType) => {
   if (recipeType === 'Drink') return 'https://www.thecocktaildb.com/api/json/v1/1/';
 };
 
+const controller = new AbortController();
+const { signal } = controller;
+
 const computeFetch = async ({ searchOption, recipeType, queryText }) => {
   try {
     const res = await fetch(
@@ -26,6 +29,7 @@ const computeFetch = async ({ searchOption, recipeType, queryText }) => {
         queryText
         // )
       }`,
+      { signal },
     );
 
     const data = await res.json();
@@ -51,3 +55,5 @@ export const fetchData = {
     },
   ),
 };
+
+export const abortRequest = () => controller.abort();
