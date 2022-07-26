@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import profileIcon from '../images/profileIcon.svg';
@@ -7,13 +7,11 @@ import AppContext from '../context';
 
 const Header = () => {
   const { location: { pathname } } = useHistory();
-  const { pageTitle } = useContext(AppContext);
-  const [searchIsVisible, setSearchIsVisible] = useState(false);
+  const { pageTitle, setSearchIsVisible, searchIsVisible } = useContext(AppContext);
 
   return (
     <>
-      <h1 data-testid="page-title">{pageTitle}</h1>
-      <div>
+      <header>
         <Link to="/profile">
           <img
             src={ profileIcon }
@@ -21,6 +19,8 @@ const Header = () => {
             data-testid="profile-top-btn"
           />
         </Link>
+
+        <h1 data-testid="page-title">{pageTitle}</h1>
 
         {
           (pathname === '/foods' || pathname === '/drinks') && (
@@ -33,9 +33,15 @@ const Header = () => {
             </button>
           )
         }
-      </div>
+      </header>
       {searchIsVisible && (
-        <SearchBar />
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+        <div
+          className="search-modal"
+          onClick={ () => setSearchIsVisible((oldState) => !oldState) }
+        >
+          <SearchBar setSearchIsVisible={ setSearchIsVisible } />
+        </div>
       )}
     </>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useContext, useState } from 'react';
 import useRecipeType from '../assets/hooks/useRecipeType';
 import AppContext from '../context';
@@ -7,7 +8,7 @@ const SearchBar = () => {
     queryText: '',
     searchOption: '',
   });
-  const { updateFilters } = useContext(AppContext);
+  const { updateFilters, setSearchIsVisible } = useContext(AppContext);
   const recipeType = useRecipeType();
 
   const onFormChange = (e) => {
@@ -29,10 +30,16 @@ const SearchBar = () => {
     }
 
     updateFilters({ ...formData, recipeType });
+    setSearchIsVisible((oldState) => !oldState);
   };
 
   return (
-    <form onSubmit={ onFormSubmit }>
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+    <form
+      onClick={ (e) => e.stopPropagation() }
+      className="search-form"
+      onSubmit={ onFormSubmit }
+    >
       <input
         onChange={ onFormChange }
         type="text"

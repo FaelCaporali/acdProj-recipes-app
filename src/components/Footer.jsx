@@ -15,6 +15,7 @@ function Footer() {
         } }
       >
         <img data-testid="drinks-bottom-btn" src={ drinkIcon } alt="drink" />
+        <span className="drink-btn-adjust">Drinks</span>
       </button>
       <button
         type="button"
@@ -23,6 +24,7 @@ function Footer() {
         } }
       >
         <img data-testid="food-bottom-btn" src={ mealIcon } alt="food" />
+        Foods
       </button>
     </footer>
   );

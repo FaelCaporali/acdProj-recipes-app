@@ -12,6 +12,7 @@ function Provider({ children }) {
     recipeType: '',
   });
   const [recipes, setRecipes] = useState([]);
+  const [searchIsVisible, setSearchIsVisible] = useState(false);
 
   const updateFilters = ({ searchOption, queryText, recipeType }) => {
     setFilters({
@@ -28,7 +29,15 @@ function Provider({ children }) {
   }, [filters]);
 
   return (
-    <AppContext.Provider value={ { recipes, updateFilters, setPageTitle, pageTitle } }>
+    <AppContext.Provider
+      value={ {
+        recipes,
+        updateFilters,
+        setPageTitle,
+        pageTitle,
+        searchIsVisible,
+        setSearchIsVisible } }
+    >
       {children}
     </AppContext.Provider>
   );

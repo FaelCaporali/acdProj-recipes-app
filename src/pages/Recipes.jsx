@@ -73,7 +73,7 @@ const Recipes = () => {
 
   return (
     <>
-      <div>
+      <div className="category-container">
         <button
           onClick={ () => updateCategories(selectedCategory) }
           type="button"
@@ -87,6 +87,7 @@ const Recipes = () => {
             key={ strCategory }
             type="button"
             data-testid={ `${strCategory}-category-filter` }
+            className={ selectedCategory === strCategory ? 'selected-category' : '' }
           >
             {strCategory}
           </button>
