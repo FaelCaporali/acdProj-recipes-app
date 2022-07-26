@@ -1,11 +1,12 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 export default function useRecipeType() {
   const { location, listen } = useHistory();
   const [pathChanged, setPathChanged] = useState(location);
 
-  listen((newLocation) => setPathChanged(newLocation));
+  const unlisten = listen((newLocation) => setPathChanged(newLocation));
+  useEffect(() => () => unlisten());
 
   return useMemo(
     () => (pathChanged.pathname.includes('foods') ? 'Meal' : 'Drink'), [pathChanged],
