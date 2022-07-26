@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import AppContext from '../context';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 
 function Footer() {
   const history = useHistory();
+  const { setSearchIsVisible } = useContext(AppContext);
 
   return (
     <footer data-testid="footer">
@@ -12,6 +14,7 @@ function Footer() {
         type="button"
         onClick={ () => {
           history.push('/drinks');
+          setSearchIsVisible(false);
         } }
       >
         <img data-testid="drinks-bottom-btn" src={ drinkIcon } alt="drink" />
@@ -21,6 +24,7 @@ function Footer() {
         type="button"
         onClick={ () => {
           history.push('/foods');
+          setSearchIsVisible(false);
         } }
       >
         <img data-testid="food-bottom-btn" src={ mealIcon } alt="food" />

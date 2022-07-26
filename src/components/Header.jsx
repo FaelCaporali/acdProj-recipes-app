@@ -38,7 +38,7 @@ const Header = () => {
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
           className="search-modal"
-          onClick={ () => setSearchIsVisible((oldState) => !oldState) }
+          onClick={ () => setSearchIsVisible(false) }
         >
           <SearchBar setSearchIsVisible={ setSearchIsVisible } />
         </div>

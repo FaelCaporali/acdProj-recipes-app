@@ -31,12 +31,14 @@ function Provider({ children }) {
   return (
     <AppContext.Provider
       value={ {
+        setRecipes,
         recipes,
         updateFilters,
         setPageTitle,
         pageTitle,
         searchIsVisible,
-        setSearchIsVisible } }
+        setSearchIsVisible,
+      } }
     >
       {children}
     </AppContext.Provider>

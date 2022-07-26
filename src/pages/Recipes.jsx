@@ -16,7 +16,7 @@ const Recipes = () => {
   const isInitialMount = useRef(true);
   const [categoryList, setCategoryList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
-  const { updateFilters, recipes, setPageTitle } = useContext(AppContext);
+  const { updateFilters, setRecipes, recipes, setPageTitle } = useContext(AppContext);
   const recipeType = useRecipeType();
 
   useEffect(() => {
@@ -27,7 +27,10 @@ const Recipes = () => {
     setTimeout(() => {
       history.push(`/${typeUrl}/${recipe.id}`);
     }, time);
-    return () => clearTimeout();
+    return () => {
+      setRecipes([]);
+      clearTimeout();
+    };
   }, [recipes]);
 
   useEffect(() => {

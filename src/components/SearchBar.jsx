@@ -30,7 +30,7 @@ const SearchBar = () => {
     }
 
     updateFilters({ ...formData, recipeType });
-    setSearchIsVisible((oldState) => !oldState);
+    setSearchIsVisible(false);
   };
 
   return (
