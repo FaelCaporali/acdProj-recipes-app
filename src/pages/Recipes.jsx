@@ -96,7 +96,7 @@ const Recipes = () => {
           </button>
         ))}
       </div>
-      <div>
+      <div className="recipe-cards-container">
         {
           cutRecipes.map((recipe, i) => {
             const parsedRecipe = parseRecipe(recipe, recipeType);

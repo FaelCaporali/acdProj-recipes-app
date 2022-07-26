@@ -112,7 +112,7 @@ const RecipeDetails = () => {
                     onChange={ handleClick }
                     checked={ checkIngredient(ingredient.name) }
                   />
-                  {`${ingredient.name} - ${ingredient.amount}`}
+                  {` ${ingredient.name} - ${ingredient.amount}`}
                 </label>
               </li>
             ))}

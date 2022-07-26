@@ -127,12 +127,45 @@ img {
 .recipe-wrapper {
   display: flex;
   flex-flow: column;
+  margin: 4rem 0;
+}
+
+.recipe-wrapper section {
+  display: block;
+}
+
+.recipe-wrapper ol {
+  padding: 0 1rem;
+}
+
+.recipe-wrapper ul {
+  list-style: none;
+}
+
+.recipe-wrapper ul li label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.final-button-container {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 0.5rem;
 }
 
 .final-button {
-  bottom: 0;
-  position: fixed;
-  z-index: 100;
+  border: none;
+  padding: 0.5rem 0;
+  width: 90%;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 0.3rem;
 }
 
 .share-and-like {
@@ -142,6 +175,14 @@ img {
   top: 0;
   width: 100%;
   z-index: 100;
+  left: 0;
+  padding: 0.75rem 5%;
+  background-color: white;
+}
+
+.share-and-like button {
+  border: none;
+  background: none;
 }
 
 .search-modal {
@@ -183,4 +224,10 @@ img {
 .selected-category {
   background-color: black;
   color: white;
+}
+
+.recipe-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }

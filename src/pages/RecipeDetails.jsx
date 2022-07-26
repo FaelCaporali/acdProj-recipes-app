@@ -63,6 +63,8 @@ const RecipeDetails = () => {
         />
         <h2 data-testid="recipe-title">{recipe[`str${recipeType}`]}</h2>
         <p data-testid="recipe-category">
+          Category:
+          {' '}
           {recipeType === 'Meal' ? recipe.strCategory : recipe.strAlcoholic}
         </p>
         <ol>
@@ -92,14 +94,16 @@ const RecipeDetails = () => {
         {sugestions.length && <SugestionsCarousel sugestions={ sugestions } />}
       </aside>
       {!checkDone && (
-        <button
-          type="button"
-          data-testid="start-recipe-btn"
-          onClick={ () => push(`/${pathTypes}/${id}/in-progress`) }
-          className="final-button"
-        >
-          {checkProgress ? 'Continue Recipe' : 'Start Recipe'}
-        </button>
+        <div className="final-button-container">
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ () => push(`/${pathTypes}/${id}/in-progress`) }
+            className="final-button"
+          >
+            {checkProgress ? 'Continue Recipe' : 'Start Recipe'}
+          </button>
+        </div>
       )}
     </div>
   );
