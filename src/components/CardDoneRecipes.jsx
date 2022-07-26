@@ -38,8 +38,8 @@ const CardDoneRecipe = ({ recipe, index }) => {
           width="100px"
           data-testid={ `${index}-horizontal-image` }
         />
-        <span data-testid={ `${index}-horizontal-name` }>{name}</span>
       </Link>
+      <span data-testid={ `${index}-horizontal-name` }>{name}</span>
       <span
         data-testid={ `${index}-horizontal-top-text` }
       >

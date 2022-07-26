@@ -20,31 +20,34 @@ function Profile() {
   };
 
   return (
-    <div>
+    <div className="profile-container">
       { user && (<h3 data-testid="profile-email">{ user.email }</h3>)}
-      <button
-        data-testid="profile-done-btn"
-        type="button"
-        onClick={ () => history.push('/done-recipes') }
-      >
-        Done Recipes
-      </button>
-      <button
-        data-testid="profile-favorite-btn"
-        type="button"
-        onClick={ () => history.push('/favorite-recipes') }
-      >
-        Favorite Recipes
 
-      </button>
-      <button
-        data-testid="profile-logout-btn"
-        type="button"
-        onClick={ handleClickLogout }
-      >
-        Logout
+      <div className="profile-buttons">
+        <button
+          data-testid="profile-done-btn"
+          type="button"
+          onClick={ () => history.push('/done-recipes') }
+        >
+          Done Recipes
+        </button>
+        <button
+          data-testid="profile-favorite-btn"
+          type="button"
+          onClick={ () => history.push('/favorite-recipes') }
+        >
+          Favorite Recipes
 
-      </button>
+        </button>
+        <button
+          data-testid="profile-logout-btn"
+          type="button"
+          onClick={ handleClickLogout }
+        >
+          Logout
+
+        </button>
+      </div>
     </div>
   );
 }

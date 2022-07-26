@@ -27,27 +27,29 @@ const FavoriteRecipes = () => {
 
   return (
     <div>
-      <button
-        type="button"
-        data-testid="filter-by-all-btn"
-        onClick={ () => filtro() }
-      >
-        All
-      </button>
-      <button
-        type="button"
-        data-testid="filter-by-food-btn"
-        onClick={ () => filtro('food') }
-      >
-        Food
-      </button>
-      <button
-        type="button"
-        data-testid="filter-by-drink-btn"
-        onClick={ () => filtro('drink') }
-      >
-        Drinks
-      </button>
+      <div className="saved-filters-container">
+        <button
+          type="button"
+          data-testid="filter-by-all-btn"
+          onClick={ () => filtro() }
+        >
+          All
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-food-btn"
+          onClick={ () => filtro('food') }
+        >
+          Food
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-drink-btn"
+          onClick={ () => filtro('drink') }
+        >
+          Drinks
+        </button>
+      </div>
       {favorites && favorites.map((recipe, index) => (
         <div key={ recipe.id }>
           <CardDoneRecipe recipe={ recipe } index={ index } />

@@ -211,6 +211,45 @@ img {
   gap: 1.5rem;
 }
 
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.profile-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.profile-buttons button {
+  padding: 0.5rem;
+  border: 2px solid rgb(172, 172, 172);
+  border-radius: 0.4rem;
+}
+
+.profile-buttons button:hover {
+  color: white;
+  background-color: black;
+  padding: 0.5rem;
+  border: 2px solid black;
+}
+
+.saved-filters-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.saved-filters-container button {
+  padding: 0.2rem;
+  border: 2px solid rgb(172, 172, 172);
+  border-radius: 0.4rem;
+  flex-basis: 100%;
+}
+
 .hidden {
   visibility: hidden;
 }
