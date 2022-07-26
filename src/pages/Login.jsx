@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
+import mealIcon from '../images/mealIcon.svg';
 import { changeLocalStorage } from '../assets/hooks/index';
 
 const Login = () => {
@@ -39,9 +40,14 @@ const Login = () => {
   }
 
   return (
-    <div>
+    <div className="login-form">
+      <div className="login-title">
+        <img data-testid="food-bottom-btn" src={ mealIcon } alt="food" />
+        <h1>Recipes App</h1>
+      </div>
       <label htmlFor="email-input">
         Email:
+        <br />
         <input
           type="email"
           name="email"
@@ -55,6 +61,7 @@ const Login = () => {
 
       <label htmlFor="password-input">
         Senha:
+        <br />
         <input
           type="password"
           name="password"

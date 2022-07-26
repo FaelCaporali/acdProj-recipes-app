@@ -22,17 +22,17 @@ const Header = () => {
 
         <h1 data-testid="page-title">{pageTitle}</h1>
 
-        {
-          (pathname === '/foods' || pathname === '/drinks') && (
-            <button onClick={ () => setSearchIsVisible(!searchIsVisible) } type="button">
-              <img
-                src={ searchIcon }
-                alt="search icon"
-                data-testid="search-top-btn"
-              />
-            </button>
-          )
-        }
+        <button
+          className={ (pathname === '/foods' || pathname === '/drinks') ? '' : 'hidden' }
+          onClick={ () => setSearchIsVisible(!searchIsVisible) }
+          type="button"
+        >
+          <img
+            src={ searchIcon }
+            alt="search icon"
+            data-testid="search-top-btn"
+          />
+        </button>
       </header>
       {searchIsVisible && (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
